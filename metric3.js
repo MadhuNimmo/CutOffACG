@@ -13,8 +13,13 @@ function main() {
     inputDir,
     "Metric3"
   );
-  appFiles = appfrmfiles[name]["app"];
-  frmFiles = appfrmfiles[name]["frm"];
+  if (name == "none") {
+    appFiles = [];
+    frmFiles = [];
+  } else {
+    appFiles = appfrmfiles[name]["app"];
+    frmFiles = appfrmfiles[name]["frm"];
+  }
 
   return getTypeMetric();
 }
@@ -99,7 +104,12 @@ function getTypeMetric() {
   var SCG_edges = getStaticCallGraphEdges(keys);
   var COM_edges = comReach(DCG_edges, SCG_edges);
 
-  console.log(DCG_edges.getSize(), SCG_edges.getSize(), COM_edges.getSize());
+  console.log(
+    DCG_edges.getSize(),
+    SCG_edges.getSize(),
+    COM_edges.getSize(),
+    SCG.getAllEdges().getSize()
+  );
 
   var DCG_classedges = getEdgeTypes(DCG_edges, "DCG");
 
@@ -113,6 +123,11 @@ function getTypeMetric() {
   SCG_intedges = SCG_classedges["Intermediate"];
   SCG_frmedges = SCG_classedges["Framework"];
 
+  /*tot_precision = (
+    COM_edges.getSize() == 0
+      ? 0
+      : COM_edges.getSize() / SCG.getAllEdges().getSize()
+  ).toFixed(4);*/
   tot_precision = (
     COM_edges.getSize() == 0 ? 0 : COM_edges.getSize() / SCG_edges.getSize()
   ).toFixed(4);
@@ -333,7 +348,7 @@ function getInputs() {
     name = process.argv[6];
     var metout = main();
     const json = JSON.stringify(metout, null, 2);
-    filename = process.argv[3].replace(/SCG/, "Metrics3");
+    filename = process.argv[3].replace(/JSSCG/, "Metrics3_");
     fs.writeFileSync(filename, json, "utf8", function (err) {
       if (err) console.log("error", err);
     });
