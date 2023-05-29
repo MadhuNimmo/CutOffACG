@@ -164,11 +164,11 @@ function getInputs() {
     appfrmfiles = JSON.parse(fs.readFileSync(process.argv[5], "utf8"));
     name = process.argv[6];
     var metout = main();
-    const json = JSON.stringify(metout, null, 2);
-    filename = process.argv[3].replace(/SCG/, "Metrics1"); //process.argv[3].replace(/SCG_/, "Metrics1_");
+    /*const json = JSON.stringify(metout, null, 2);
+    /filename = process.argv[3].replace(/SCG/, "Metrics1"); //process.argv[3].replace(/SCG_/, "Metrics1_");
     fs.writeFileSync(filename, json, "utf8", function (err) {
       if (err) console.log("error", err);
-    });
+    });*/
   } else {
     console.log(
       "Please enter arguments in the following sequence:\n1:Dynamic Call graph File\n2:Static Call Graph File\n3:Directory of Javascript files\n4:Output Directory"

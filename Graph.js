@@ -107,8 +107,12 @@ class Graph {
       var get_values = this.AdjList.get(i);
       // iterate over all the values
       for (var j of get_values) {
-        if (!output.hasEdge(i, j)) {
-          output.addEdge(i, j);
+        console.log(j)
+        console.log(nimmo)
+        if(j!=="system (Native)"){
+          if (!output.hasEdge(i, j)) {
+            output.addEdge(i, j);
+          }
         }
       }
     }
